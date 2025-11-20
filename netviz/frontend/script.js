@@ -2,7 +2,6 @@ async function loadDevices() {
     const btn = document.getElementById("scanBtn");
     const loading = document.getElementById("loading");
 
-    // Show loading ONLY when button is clicked
     loading.style.display = "inline";
     btn.disabled = true;
 
@@ -10,19 +9,19 @@ async function loadDevices() {
         const res = await fetch("/devices");
         const devices = await res.json();
 
-        const devicesContainer = document.getElementById("devices");
-        devicesContainer.innerHTML = "";
+        const container = document.getElementById("devices");
+        container.innerHTML = "";
 
         if (!devices || devices.length === 0) {
-            devicesContainer.innerHTML = "<p>No devices found.</p>";
+            container.innerHTML = "<p>No devices found.</p>";
             return;
         }
 
         devices.forEach(dev => {
-            const div = document.createElement("div");
-            div.className = "device-card";
+            const card = document.createElement("div");
+            card.className = "device-card";
 
-            div.innerHTML = `
+            card.innerHTML = `
                 <strong>IP:</strong> ${dev.ip}<br>
                 <strong>MAC:</strong> ${dev.mac || "Unknown"}<br>
                 <strong>Hostname:</strong> ${dev.hostname}<br>
@@ -30,26 +29,22 @@ async function loadDevices() {
                 <strong>Last Seen:</strong> ${new Date(dev.last_seen * 1000).toLocaleString()}
             `;
 
-            devicesContainer.appendChild(div);
+            container.appendChild(card);
         });
 
         drawGraph(devices);
 
-    } catch (error) {
-        console.error("Error fetching devices:", error);
+    } catch (err) {
+        console.error("Error:", err);
     } finally {
-        // Hide loading AFTER scan completes
         loading.style.display = "none";
         btn.disabled = false;
     }
 }
 
 function drawGraph(devices) {
-    const graph = document.getElementById("graph");
-    graph.innerHTML = `
-        <strong>Router</strong> → ${devices.length} connected device(s)
-    `;
+    document.getElementById("graph").innerHTML =
+        `<strong>Router</strong> → ${devices.length} connected device(s)`;
 }
 
-// Scan happens ONLY on click now
 document.getElementById("scanBtn").addEventListener("click", loadDevices);
