@@ -1,0 +1,44 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    padding: 25px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+#scanBtn {
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+#scanBtn:hover {
+    background: #0f5aae;
+}
+
+.graph-box {
+    background: #fff3e0;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    font-size: 18px;
+}
+
+.device-card {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.device-card strong {
+    color: #333;
+}

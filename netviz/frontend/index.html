@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NetViz Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <h1>🌐 NetViz — Network Visualizer</h1>
+
+    <button id="scanBtn">Scan Network</button>
+<span id="loading" style="display:none; margin-left:10px; font-weight:bold;">
+    🔄 Scanning...
+</span>
+
+
+    <h2>Network Overview</h2>
+    <div id="graph" class="graph-box">
+        Network graph will appear here.
+    </div>
+
+    <h2>Connected Devices</h2>
+    <div id="devices"></div>
+
+    <script src="/static/script.js"></script>
+
+</body>
+</html>
