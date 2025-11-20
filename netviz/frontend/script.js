@@ -26,6 +26,7 @@ async function loadDevices() {
                 <strong>MAC:</strong> ${dev.mac || "Unknown"}<br>
                 <strong>Hostname:</strong> ${dev.hostname}<br>
                 <strong>Latency:</strong> ${dev.latency_ms} ms<br>
+                <strong>Device Vendor:</strong> ${dev.vendor}<br>
                 <strong>Last Seen:</strong> ${new Date(dev.last_seen * 1000).toLocaleString()}
             `;
 

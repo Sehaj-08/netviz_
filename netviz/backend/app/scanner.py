@@ -4,6 +4,7 @@ import os
 import socket
 import ipaddress
 import time
+import requests
 import psutil
 from ping3 import ping
 
@@ -57,6 +58,7 @@ def ping_sweep(subnet):
                 "ip": ip,
                 "mac": None,
                 "hostname": ip,
+                "vendor": "Unknown Vendor",
                 "latency_ms": round(latency * 1000, 2),
                 "last_seen": int(time.time())
             })
@@ -69,15 +71,18 @@ def arp_scan(subnet):
     ether = Ether(dst="ff:ff:ff:ff:ff:ff")
     pkt = ether / arp
     ans, _ = srp(pkt, timeout=2, inter=0.1)
-
     devices = []
+
     for _, r in ans:
         ip = r.psrc
         mac = r.hwsrc
+        vendor = get_vendor(mac)
+
         devices.append({
             "ip": ip,
             "mac": mac,
             "hostname": ip,
+            "vendor":vendor,
             "latency_ms": -1,
             "last_seen": int(time.time())
         })
@@ -101,6 +106,18 @@ def scan_network():
 
     # Otherwise fallback to ping sweep (always works)
     return ping_sweep(subnet)
+
+
+
+def get_vendor(mac):
+    try:
+        r = requests.get(f"https://api.macvendors.com/{mac}", timeout=2)
+        if r.status_code == 200:
+            return r.text.strip()
+    except:
+        pass
+    return "Unknown Vendor"
+
 
 if __name__ == "__main__":
     print(scan_network())
